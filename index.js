@@ -6,7 +6,7 @@ const moment = require("moment")
 require("moment-duration-format")
 const momenttz = require("moment-timezone")
 const token = "ODc1OTczNDIwMTU4OTc2MDYw.YRdT0g.YZXbOnECyo8LCYS1XB-E1LomotM"
-//const keepAlive = require('./server.js')
+const keepAlive = require('./server.js')
 const welcomeChannelName = "입퇴장"
 const byeChannelName = "입퇴장"
 const welcomeChannelComment = "어서오세요!"
@@ -130,7 +130,6 @@ client.on("message", (message) => {
     list = `\`\`\`css\n`
 
     for (let i = 0; i < arr.length; i++) {
-      // list += `${arr[i].name} - ${arr[i].id}\n`
       list += `${arr[i].name}\n`
     }
     list += `\`\`\`\n`
@@ -277,5 +276,5 @@ client.on("message", (message) => {
   }
 })
 
-//keepAlive()
+keepAlive()
 client.login(token)
