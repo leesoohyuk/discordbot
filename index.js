@@ -5,7 +5,7 @@ const { checkPermission, changeCommandStringLength, getEmbedFields, MessageSave 
 const moment = require("moment")
 require("moment-duration-format")
 const momenttz = require("moment-timezone")
-const token = "ODc1OTczNDIwMTU4OTc2MDYw.YRdT0g.YZXbOnECyo8LCYS1XB-E1LomotM"
+const token = ""
 const keepAlive = require('./server.js')
 const welcomeChannelName = "입퇴장"
 const byeChannelName = "입퇴장"
@@ -58,6 +58,36 @@ client.on("guildMemberRemove", (member) => {
 
   byeChannel.send(`<@${deleteUser.id}> ${byeChannelComment}\n`)
 })
+
+client.on('messageUpdate', async(oldMessage, newMessage) => {
+    if(oldMessage.content === newMessage.content) return 
+    if(oldMessage.author.bot) return;
+    let img = oldMessage.author.avatar ? `https://cdn.discordapp.com/avatars/${oldMessage.author.id}/${oldMessage.author.avatar}.webp?size=256` : undefined;
+    let embed = new Discord.MessageEmbed()
+    .setTitle(`${oldMessage.author.tag}님이 메시지를 수정했습니다.`)
+    .setColor('#FFFF')
+    .addField('수정 전 메시지:', oldMessage.content)
+    .addField('수정 후 메시지:', newMessage.content)
+    .setFooter(message.guild.name)
+    .setTimestamp()
+    client.channels.cache.get('889460394970726401')
+    .send(embed)
+  })
+  
+  
+  
+client.on('messageDelete', async message => {
+    if(message.author.bot) return
+    let img = message.author.avatar ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp?size=256` : undefined;
+    let embed = new Discord.MessageEmbed() 
+    .setTitle(`${message.author.tag} 님이 메시지를 삭제했습니다.`)
+    .setColor('#FFFF')
+    .addField('삭제된 메시지:', message.content)
+    .setFooter(message.guild.name)
+    .setTimestamp()
+    client.channels.cache.get('889460394970726401')
+    .send(embed)
+  });
 
 client.on("message", (message) => {
   if (message.author.bot) return
